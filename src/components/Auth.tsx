@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Input, VStack, useToast } from '@chakra-ui/react';
+import { Box, Button, Container, Input, VStack, useToast } from '@chakra-ui/react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,7 +43,7 @@ export function Auth() {
     };
 
     return (
-        <Box maxW="400px" mx="auto" mt={8}>
+        <Container maxW='2xl' centerContent>
             <VStack spacing={4}>
                 <Input
                     type="email"
@@ -73,6 +73,6 @@ export function Auth() {
                     Sign Up
                 </Button>
             </VStack>
-        </Box>
+        </Container>
     );
 } 

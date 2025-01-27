@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Grid, Image, Text, VStack } from '@chakra-ui/react';
+import { Container, Grid, Image, Text, VStack } from '@chakra-ui/react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -36,16 +36,19 @@ export function ImageHistory() {
     };
 
     return (
-        <Grid templateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={6} p={4}>
-            {images.map((image) => (
-                <VStack key={image.id} borderWidth={1} borderRadius="lg" p={4}>
-                    <Image src={image.image_url} alt={image.prompt} />
-                    <Text fontSize="sm">{image.prompt}</Text>
-                    <Text fontSize="xs" color="gray.500">
-                        {new Date(image.created_at).toLocaleDateString()}
-                    </Text>
-                </VStack>
-            ))}
-        </Grid>
+        <Container maxW='2xl' centerContent>
+
+            <Grid templateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={6} p={4}>
+                {images.map((image) => (
+                    <VStack key={image.id} borderWidth={1} borderRadius="lg" p={4}>
+                        <Image src={image.image_url} alt={image.prompt} />
+                        <Text fontSize="sm">{image.prompt}</Text>
+                        <Text fontSize="xs" color="gray.500">
+                            {new Date(image.created_at).toLocaleDateString()}
+                        </Text>
+                    </VStack>
+                ))}
+            </Grid>
+        </Container>
     );
 } 
