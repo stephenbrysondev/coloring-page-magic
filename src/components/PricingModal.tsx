@@ -25,10 +25,9 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
     const handleUpgrade = async (plan: 'monthly' | 'yearly') => {
         setLoading(true);
         try {
-            // TODO: Implement payment integration
             toast({
                 title: 'Coming Soon',
-                description: 'Payment integration will be available soon!',
+                description: `${plan.charAt(0).toUpperCase() + plan.slice(1)} plan upgrade will be available soon!`,
                 status: 'info',
                 duration: 3000,
             });
