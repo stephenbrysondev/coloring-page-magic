@@ -1,4 +1,4 @@
-import { Box, Flex, Button, Spacer, Text, Menu, MenuButton, MenuList, MenuItem, Icon } from '@chakra-ui/react';
+import { Box, Flex, Button, Spacer, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
