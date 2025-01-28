@@ -1,5 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Input, Image, VStack, Text, useToast, Select, Alert, AlertIcon, Container } from '@chakra-ui/react';
+import {
+    Container,
+    Box,
+    Button,
+    Input,
+    Image,
+    VStack,
+    Text,
+    useToast,
+    Select,
+    Alert,
+    AlertIcon,
+    Heading,
+    Card,
+    CardBody
+} from '@chakra-ui/react';
 import { generateImage } from '../services/openai';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
@@ -113,53 +128,80 @@ export function ImageGenerator() {
     };
 
     return (
-        <Container maxW='2xl' centerContent>
+        <Container maxW="6xl" py={8}>
+            <VStack spacing={8}>
+                <Box textAlign="center" w="full">
+                    <Heading size="xl" mb={2}>Create Your Coloring Page</Heading>
+                    <Text fontSize="lg" color="gray.600">
+                        Describe what you'd like to color, and we'll create it for you
+                    </Text>
+                </Box>
 
-            <VStack spacing={4} align="stretch" p={4}>
-                {userTier && !userTier.is_premium && (
-                    <Alert status={userTier.images_generated >= FREE_TIER_LIMIT ? 'warning' : 'info'}>
-                        <AlertIcon />
-                        {userTier.images_generated >= FREE_TIER_LIMIT
-                            ? 'You have reached the free tier limit. Please upgrade to premium to generate more images.'
-                            : `You have ${FREE_TIER_LIMIT - userTier.images_generated} free generations remaining.`
-                        }
-                    </Alert>
-                )}
-                <Input
-                    placeholder="What would you like to color? (e.g., 'a happy elephant')"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                />
-                <Select
-                    value={complexity}
-                    onChange={(e) => setComplexity(e.target.value as Complexity)}
-                >
-                    <option value="simple">Simple (Ages 3-5)</option>
-                    <option value="medium">Medium (Ages 6-8)</option>
-                    <option value="detailed">Detailed (Ages 9+)</option>
-                </Select>
-                <Button
-                    onClick={handleGenerate}
-                    isLoading={loading}
-                    colorScheme="blue"
-                >
-                    Generate Coloring Page
-                </Button>
+                <Card w="full" maxW="2xl" mx="auto">
+                    <CardBody>
+                        <VStack spacing={6}>
+                            {userTier && !userTier.is_premium && (
+                                <Alert status={userTier.images_generated >= FREE_TIER_LIMIT ? 'warning' : 'info'}>
+                                    <AlertIcon />
+                                    {userTier.images_generated >= FREE_TIER_LIMIT
+                                        ? 'You have reached the free tier limit. Please upgrade to premium to generate more images.'
+                                        : `You have ${FREE_TIER_LIMIT - userTier.images_generated} free generations remaining.`
+                                    }
+                                </Alert>
+                            )}
+
+                            <Input
+                                size="lg"
+                                placeholder="What would you like to color? (e.g., 'a happy elephant')"
+                                value={prompt}
+                                onChange={(e) => setPrompt(e.target.value)}
+                            />
+
+                            <Select
+                                size="lg"
+                                value={complexity}
+                                onChange={(e) => setComplexity(e.target.value as Complexity)}
+                            >
+                                <option value="simple">Simple (Ages 3-5)</option>
+                                <option value="medium">Medium (Ages 6-8)</option>
+                                <option value="detailed">Detailed (Ages 9+)</option>
+                            </Select>
+
+                            <Button
+                                size="lg"
+                                onClick={handleGenerate}
+                                isLoading={loading}
+                                colorScheme="blue"
+                                w="full"
+                            >
+                                Generate Coloring Page
+                            </Button>
+                        </VStack>
+                    </CardBody>
+                </Card>
 
                 {generatedImage && (
-                    <Box>
-                        <Image src={generatedImage} alt="Generated coloring page" />
-                        <Text mt={2} fontSize="sm" color="gray.500">
-                            Prompt: {prompt}
-                        </Text>
-                    </Box>
+                    <Card w="full" maxW="2xl" mx="auto">
+                        <CardBody>
+                            <VStack spacing={4}>
+                                <Image
+                                    src={generatedImage}
+                                    alt="Generated coloring page"
+                                    borderRadius="md"
+                                />
+                                <Text fontSize="sm" color="gray.500">
+                                    Prompt: {prompt}
+                                </Text>
+                            </VStack>
+                        </CardBody>
+                    </Card>
                 )}
-
-                <PricingModal
-                    isOpen={isPricingOpen}
-                    onClose={() => setIsPricingOpen(false)}
-                />
             </VStack>
+
+            <PricingModal
+                isOpen={isPricingOpen}
+                onClose={() => setIsPricingOpen(false)}
+            />
         </Container>
     );
 }

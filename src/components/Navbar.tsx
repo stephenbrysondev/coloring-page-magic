@@ -1,4 +1,5 @@
-import { Box, Flex, Button, Spacer, Text } from '@chakra-ui/react';
+import { Box, Flex, Button, Spacer, Text, Menu, MenuButton, MenuList, MenuItem, Icon } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
@@ -34,14 +35,18 @@ export function Navbar() {
 
     return (
         <Box bg="gray.100" px={4} py={2}>
-            <Flex alignItems="center">
+            <Flex>
                 <Button variant="ghost" onClick={() => navigate('/')}>Generate</Button>
-                <Button variant="ghost" onClick={() => navigate('/history')}>History</Button>
                 <Spacer />
-                <Text mr={4} fontSize="sm" color="gray.600">
-                    {user?.email} ({isPremium ? 'Premium' : 'Free'})
-                </Text>
-                <Button onClick={handleSignOut}>Sign Out</Button>
+                <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                        {user?.email} ({isPremium ? 'Premium' : 'Free'})
+                    </MenuButton>
+                    <MenuList>
+                        <MenuItem onClick={() => navigate('/history')}>History</MenuItem>
+                        <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+                    </MenuList>
+                </Menu>
             </Flex>
         </Box>
     );
